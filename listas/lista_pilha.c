@@ -92,7 +92,6 @@ int main(){
     scanf("%s", str1);
     scanf("%s", str2);
     verifica(S1, str1, str2, &status, &resultado);
-    if(resultado == 1)
 
     //  Tratamento de erro.
     if(status == 0) printf("Erro ao empilhar.");
