@@ -84,9 +84,8 @@ void verifica(Stack *S1, char *str1, char *str2, int *status, int *resultado){
 
 int main(){
     int status = 0, resultado = 1;
-    Stack *S1, *S2;
+    Stack *S1;
     S1 = create(&status);
-    S2 = create(&status);
     char str1[20], str2[20];
 
     scanf("%s", str1);
