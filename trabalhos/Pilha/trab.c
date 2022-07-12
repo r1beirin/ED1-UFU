@@ -15,10 +15,12 @@ typedef struct{
     Pair *vet;
 }Stack;
 
+//  Função booleana que verifica se a pilha está vazia
 bool empty(Stack *S){
     return S->top == -1;
 }
 
+//  Função booleana que verifica se a pilha está cheia
 bool full(Stack *S){
     return S->top == MAX-1;
 }
@@ -89,7 +91,6 @@ void armazenamento(int vertice, int arestas, int matriz[vertice][vertice]){
     Função procura que realiza a procura e a soma
     de um caminho em um grafo inserido na matriz.
 */
-
 int procura(int vertice, int matriz[vertice][vertice], Stack *S,int ini, int fim){
     bool deuCerto;
 
@@ -98,7 +99,7 @@ int procura(int vertice, int matriz[vertice][vertice], Stack *S,int ini, int fim
             Caso 1 de parada: se o valor encontrado for igual a 0 e a coluna for a ultima
             Desempilha o topo da pilha, i e j recebem novos valores (do vertice anterior)
         */
-         if(matriz[i][j] == 0 && j == vertice-1){
+         if(matriz[i][j] == 0 && j >= vertice-1){
             deuCerto = pop(S, &i, &j);
             if(!deuCerto) return -1;
             else continue;
@@ -110,7 +111,6 @@ int procura(int vertice, int matriz[vertice][vertice], Stack *S,int ini, int fim
         */
         if(matriz[i][j] != 0 && j == fim-1){
             int soma = matriz[i][j];
-            //Desempilha tudo e retorna o valor
             while (pop(S,&i,&j)){
                 soma += matriz[i][j];
             }
@@ -126,11 +126,10 @@ int procura(int vertice, int matriz[vertice][vertice], Stack *S,int ini, int fim
         else{
             push(S, i, j);
             i = j;
-            j = -1;
+            j = -1; //  J volta sendo -1 pois quando voltar o loop ele começa no zero. (j++)
         }
     }
 }
-
 
 int main(){
     int valor, vertice, arestas, ini, fim;
@@ -145,5 +144,5 @@ int main(){
     scanf("%d %d", &ini, &fim);
     valor = procura(vertice, matriz, S, ini, fim);
 
-    printf("%d", valor);
+    printf("%d\n", valor);
 }
