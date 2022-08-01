@@ -3,18 +3,19 @@
     Dathan Vitor Santana da Nobrega - 12111BSI292
     Mateus Ribeiro Vaz Pereira - 12111BSI255
 */
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 
 typedef struct node Node;
 
+//  Struct de nós
 struct node{
   int data;
   Node *next;
 };
 
+//  Struct da lista
 typedef struct{
   Node *head;
 } List;
@@ -33,7 +34,7 @@ Node *newNode(bool *deuCerto){
 
 //  Função TAD para remoção de um nó da lista.
 void deleteNode(Node *no){
-    free(no);
+  free(no);
 }
 
 //  Criação e inicialização da lista
@@ -66,19 +67,21 @@ bool isFull(List *L){
 
 //  Função TAD para destruir todos os nós da lista.
 void destroy(List *L){
-    Node *no, *anterior;
+  Node *no, *anterior;
+  
+  //  Definição do NÓ e do NÓ anterior.
+  no = L->head;
+  anterior = NULL;
 
-    //  Definição do NÓ e do NÓ anterior.
-    no = L->head;
-    anterior = NULL;
-
-    while(no != NULL){
-        anterior = no;
-        no = no->next;
-        deleteNode(anterior);
-    }
-    deleteNode(no);
-    L->head = NULL;
+  //  Percorre os nós e deletam individualmente cada nó.
+  while(no != NULL){
+    anterior = no;
+    no = no->next;
+    deleteNode(anterior);
+  }
+  
+  deleteNode(no);
+  L->head = NULL;
 }
 
 void insere(List *L, int x, bool *deuCerto){
@@ -104,55 +107,66 @@ void insere(List *L, int x, bool *deuCerto){
 }
 
 void retira(List *L, int elemento, bool *deuCerto){
-    Node *no, *anterior;
-    bool status;
+  Node *no, *anterior;
+  bool status;
 
-    no = L->head;
-    anterior = NULL;
+  no = L->head;
+  anterior = NULL;
 
-    //  Avança até achar o elemento a ser encontrado
-    while (no != NULL && no->data != elemento){
-        anterior = no;
-        no = no->next;
-    }
+  //  Avança até achar o elemento a ser encontrado
+  while (no != NULL && no->data != elemento){
+    anterior = no;
+    no = no->next;
+  }
 
-    //  Verifica se elemento foi encontrado
-    if(no != NULL && no->data == elemento){
-        status = true;
-    }
-    else status = false;
+  //  Verifica se elemento foi encontrado
+  if(no != NULL && no->data == elemento){
+    status = true;
+  }
+  else status = false;
     
-    //  Se status == true, remove o elemento:
-    if(status == true){
-        if(no != L->head){
-            anterior->next = no->next;
-            deleteNode(no);
-        }
-        else{
-            L->head = no->next;
-            deleteNode(no);
-        }
-        *deuCerto = true;
+  //  Se status == true, remove o elemento:
+  if(status == true){
+    //  Se o nó do elemento não estiver na cabeça, retira o elemento e deleta o nó.
+    if(no != L->head){
+      anterior->next = no->next;
+      deleteNode(no);
     }
-    else deuCerto = false;
+    //  Caso o nó do elemento esteja na cabeça da lista.
+    else{
+      L->head = no->next;
+      deleteNode(no);
+    }
+    *deuCerto = true;
+  }
+  else deuCerto = false;
 }
 
+//  Função TAD que verifica se o elemento pertence a lista.
 int pertence(Node *no, int elemento){
+  //  Se o nó for o ultimo da lista e coincidir com o elemento ou somente coincidir com o elemento, retorna 1.
   if((no->next == NULL && no->data == elemento) || no->data == elemento) return 1;
+  //  Se o nó for o ultimo da lista e não coincidir com o elemento, retorna 0.
   else if(no->next == NULL) return 0;
+
   else return pertence(no->next, elemento);
 }
 
+//  Função TAD que verifica qual é o ultimo elemento da lista e retorna esse elemento.
 int ultimo(Node *no){
+  //  Verifica se é o ultimo elemento da lista.
   if(no->next == NULL) return no->data;
   else return ultimo(no->next);
 }
 
+//  Função TAD que retorna a soma de todos os elementos.
 int soma(Node *no){
+  //  Caso base para depois do ultimo nó ou lista vazia.
   if(no == NULL) return 0;
   else return no->data + soma(no->next);
 }
 
+//  Função TAD que retorna a soma de todos os elementos impares.
 int soma_impar(Node *no){
   if(no == NULL) return 0;
   else{
@@ -161,12 +175,14 @@ int soma_impar(Node *no){
   }
 }
 
+//  Função TAD que verifica qual é o n_ésimo e retorna esse elemento da lista.
 int n_esimo(Node *no, int nEsimo){
   //  nEsimo == 1 pois a primeira posição é tratada como 1.
   if(nEsimo == 1) return no->data;
   return n_esimo(no->next, nEsimo - 1);
 }
 
+//  Função TAD que calcula e retorna o comprimento da lista.
 int comprimento(Node *no){
   if(no == NULL) return 0;
   return 1 + comprimento(no->next);
@@ -190,6 +206,8 @@ int main(){
   printf("%d\n", soma_impar(L->head));
   printf("%d\n", n_esimo(L->head, nEsimo));
   printf("%d\n", comprimento(L->head));
+
+  destroy(L);
 
   return 0;
 }
