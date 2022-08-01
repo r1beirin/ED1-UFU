@@ -1,15 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 10
+#define MAX 50
 
 typedef struct{
     int topo;
-    int elemento[MAX];
+    int *elemento;
 } Stack;
 
 Stack *create(){
     Stack *S;
     S = malloc(sizeof(Stack));
+    S->elemento = malloc(MAX * sizeof(int));
 
     if(S != NULL){
         S->topo = -1;
@@ -57,6 +58,7 @@ int main(){
     S = create();
 
     push(S, 10, &status);
+    push(S, 20, &status);
 
     //  Tratamento de erro.
     if(status == 0) printf("Erro ao empilhar.");

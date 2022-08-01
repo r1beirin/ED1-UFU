@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+typedef struct node Node;
+struct node{
+    char elemento;
+    Node *next;
+};
+
+typedef struct{
+    Node *head;
+} List;
+
+Node *newNode(bool *deuCerto){
+    Node *no;
+
+    no = (Node*) malloc(sizeof(Node));
+
+    if(no = NULL) deuCerto = false;
+    else deuCerto = true;
+
+    return no;
+}
+
+void deleteNode(Node *no){
+    if(no != NULL) free(no);
+}
+
+List *create(bool *deuCerto){
+    List *L;
+
+    L = (List*) malloc(sizeof(List));
+
+    if(L == NULL) *deuCerto = false;
+    else{
+        deuCerto = true;
+        L->head = NULL;
+    }
+
+    return L;
+}
+
+bool isFull(List *L){
+    return false;
+}
+
+bool isEmpty(List *L){
+    return L->head == NULL;
+}
+
+void insertOrd(List *L, char elemento, bool *deuCerto){
+    
+}
+
+int main(){
+    return 0;
+}
